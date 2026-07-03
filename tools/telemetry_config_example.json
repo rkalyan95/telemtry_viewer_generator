@@ -11,6 +11,35 @@
       "name": "test2",
       "description": "",
       "data_type": "int8"
+    },
+    {
+      "id": 3,
+      "name": "bmp",
+      "description": "",
+      "data_type": "struct",
+      "struct_fields": [
+        {
+          "name": "temp",
+          "data_type": "float32",
+          "count": 1
+        },
+        {
+          "name": "pressure",
+          "data_type": "float32",
+          "count": 1
+        },
+        {
+          "name": "humid",
+          "data_type": "float32",
+          "count": 1
+        },
+        {
+          "name": "name",
+          "data_type": "string",
+          "count": 7,
+          "default_value": "bmp280"
+        }
+      ]
     }
   ]
 }

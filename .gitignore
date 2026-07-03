@@ -1,0 +1,65 @@
+# --- Build Artifacts ---
+# Generic build folders
+build/
+bin/
+obj/
+out/
+dist/
+Core/
+Drivers/
+
+# Makefile generated files
+*.o
+*.a
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.txt
+*.ioc
+*.s
+*.ld
+*.mxproject
+*.pyc
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+# --- IDE Specific Files ---
+# STM32CubeIDE / Eclipse
+.settings/
+.project
+.cproject
+.metadata/
+Debug/
+Release/
+
+# VS Code
+.vscode/
+
+# ESP-IDF specific
+sdkconfig
+sdkconfig.old
+build/
+managed_components/
+
+# --- Operating System Files ---
+# Windows
+Thumbs.db
+Desktop.ini
+*.bak
+
+# macOS
+.DS_Store
+
+# --- User/Project Specific ---
+# If your tool generates these, ensure you ignore sensitive configs
+# but keep the generated info_config.c if you want it tracked.
+# If info_config.c is generated on the fly, add it here:
+# info_config.c
