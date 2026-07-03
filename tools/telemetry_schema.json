@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Telemetry Sensor and Command Configuration",
+  "description": "Schema for defining sensor and command metadata for generic MCU telemetry integration.",
+  "type": "object",
+  "required": ["version", "protocol_version", "endianness", "sensors"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the telemetry config schema."
+    },
+    "protocol_version": {
+      "type": "string",
+      "description": "Version of the telemetry wire protocol."
+    },
+    "endianness": {
+      "type": "string",
+      "enum": ["little", "big"],
+      "description": "Wire byte order for numeric payloads."
+    },
+    "alignment": {
+      "type": "string",
+      "enum": ["packed", "arm", "default"],
+      "description": "Preferred struct alignment mode for structured payloads."
+    },
+    "sensors": {
+      "type": "array",
+      "description": "Registered sensor payload definitions.",
+      "items": {"$ref": "#/definitions/sensor"}
+    },
+    "commands": {
+      "type": "array",
+      "description": "Optional command payload definitions for backward compatibility.",
+      "items": {"$ref": "#/definitions/command"}
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "baseField": {
+      "type": "object",
+      "required": ["id", "name", "data_type"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255,
+          "description": "Numeric packet ID used on the wire."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable identifier for the sensor or command."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional descriptive text for the field."
+        },
+        "data_type": {
+          "type": "string",
+          "enum": [
+            "float32",
+            "float64",
+            "int8",
+            "uint8",
+            "int16",
+            "uint16",
+            "int32",
+            "uint32",
+            "string",
+            "bytes",
+            "struct"
+          ],
+          "description": "Logical data type for the sensor or command payload."
+        },
+        "units": {
+          "type": "string",
+          "description": "Optional units for display, such as 'C', 'V', or 'RPM'."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Optional number of elements for bytes or repeated scalar fields."
+        },
+        "scale": {
+          "type": "number",
+          "description": "Optional scale factor applied to raw sensor values."
+        },
+        "offset": {
+          "type": "number",
+          "description": "Optional zero offset applied to raw sensor values."
+        },
+        "display_format": {
+          "type": "string",
+          "description": "Optional format string for presentation, e.g. '{value:.2f} °C'."
+        }
+      },
+      "additionalProperties": false
+    },
+    "structField": {
+      "type": "object",
+      "required": ["name", "data_type"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "data_type": {
+          "type": "string",
+          "enum": [
+            "float32",
+            "float64",
+            "int8",
+            "uint8",
+            "int16",
+            "uint16",
+            "int32",
+            "uint32",
+            "string",
+            "bytes"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Optional array count for repeated fields."
+        },
+        "units": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "display_format": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sensor": {
+      "allOf": [
+        { "$ref": "#/definitions/baseField" },
+        {
+          "type": "object",
+          "properties": {
+            "default_value": {
+              "type": ["number", "string", "null"]
+            },
+            "struct_fields": {
+              "type": "array",
+              "items": {"$ref": "#/definitions/structField"}
+            }
+          },
+          "if": {
+            "properties": {"data_type": {"const": "struct"}}
+          },
+          "then": {
+            "required": ["struct_fields"]
+          }
+        }
+      ]
+    },
+    "command": {
+      "allOf": [
+        { "$ref": "#/definitions/baseField" },
+        {
+          "type": "object",
+          "properties": {
+            "ack_required": {
+              "type": "boolean",
+              "default": false
+            },
+            "tx_buffer": {
+              "type": "string",
+              "description": "Optional explicit transmit buffer string for the command."
+            },
+            "struct_fields": {
+              "type": "array",
+              "items": {"$ref": "#/definitions/structField"}
+            }
+          },
+          "if": {
+            "properties": {"data_type": {"const": "struct"}}
+          },
+          "then": {
+            "required": ["struct_fields"]
+          }
+        }
+      ]
+    }
+  }
+}

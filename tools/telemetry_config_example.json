@@ -1,0 +1,16 @@
+{
+  "sensors": [
+    {
+      "id": 1,
+      "name": "test",
+      "description": "",
+      "data_type": "float32"
+    },
+    {
+      "id": 2,
+      "name": "test2",
+      "description": "",
+      "data_type": "int8"
+    }
+  ]
+}
