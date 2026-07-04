@@ -89,8 +89,6 @@ The above code remains same for all the supported devices.
 8. Click on **Generate C files** and select the `generateconfigs` folder as output; inside the folder, you should now see `info_config.c` and `info_config.h` files.<br><br>
    ![Generate C Files](tools/images/GenerateC.png)<br><br>
 
-9. For next steps, refer to the other repo here.<br><br>
-   ![Next Steps Documentation](https://github.com/rkalyan95/utelemetry_serial)<br><br>
 
 # How to use the library 
 
