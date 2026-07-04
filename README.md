@@ -56,7 +56,7 @@ The above code remains same for all the supported devices.
 
 # How to use the tool
 1. Click on Setup.bat file to install the needed dependencies , on success proceed to step2
-2. Launch the python file from the ![Path](tools/gemini-code-1782748779266.py)
+2. Launch the python file from the **tools/telemtry_tool.py**
 3. The UI should automatically connect to the COM port provided in the python code
 
 # How to Add a new sensor 
