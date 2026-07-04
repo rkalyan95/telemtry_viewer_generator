@@ -16,7 +16,6 @@ Drivers/
 *.hex
 *.map
 *.lst
-*.txt
 *.ioc
 *.s
 *.ld
