@@ -4,6 +4,8 @@ Tired of the constant friction between your firmware data structures and human-r
 
 Telemetry Viewer Tool solves this by offloading the complexity. It uses a clean, JSON-based configuration to handle data interpretation on the PC side, allowing your microcontroller to transmit raw, high-speed binary packets.
 
+![](tools/images/Tool.png)<br><br>
+
 ## Clone with the below two commands
 1. git clone <clonelink>
 2. git submodule update --init --recursive
