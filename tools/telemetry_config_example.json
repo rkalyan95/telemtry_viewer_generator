@@ -40,6 +40,40 @@
           "default_value": "bmp280"
         }
       ]
+    },
+    {
+      "id": 4,
+      "name": "temp",
+      "description": "",
+      "data_type": "struct",
+      "struct_fields": [
+        {
+          "name": "field1",
+          "data_type": "uint8",
+          "count": 1
+        },
+        {
+          "name": "field2",
+          "data_type": "float32",
+          "count": 1
+        },
+        {
+          "name": "filed3",
+          "data_type": "uint16",
+          "count": 1
+        },
+        {
+          "name": "field4",
+          "data_type": "string",
+          "count": 7,
+          "default_value": "temp12"
+        },
+        {
+          "name": "field5",
+          "data_type": "bytes",
+          "count": 4
+        }
+      ]
     }
   ]
 }
