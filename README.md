@@ -90,6 +90,8 @@ The above code remains same for all the supported devices.
 
 # How to use the library 
 
+ ***As a first step , the user must copy the telemtry_lib folder to the needed supported device folders , so that it can be linked and built successfully.***
+
 1. Once the files are generated , copy the respective header and source files from the generatedconfigs folder to the telemtry_lib/Src and telemtry_lib/Inc folders
 2. Add your files to Makefile or CMakelists file in order for your system to detect them.Add the below initliasing code to your main function and make the build working. 
 3. Sometimes the hw files might contain other hardware than yours , you can simply remove those files or do not add them in the build process.
