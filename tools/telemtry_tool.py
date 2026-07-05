@@ -10,6 +10,7 @@ import struct
 import subprocess
 import threading
 import time
+from plotter import PlotWindow
 
 CODEGEN_SCRIPT = os.path.join(os.path.dirname(__file__), "telemetry_codegen.py")
 
@@ -53,6 +54,14 @@ class TelemetryApp:
         self.is_logging = False
         self.clean_file = None
         self.raw_file = None
+        try:
+            with open("telemetry_config_example.json", "r", encoding="utf-8") as f:
+                self.config_data = json.load(f)
+        except FileNotFoundError:
+            self.config_data = {"sensors": []}
+            print("Config file not found!")
+            
+        self.subscribers = []
         self.create_widgets()
         self.attempt_serial_connection()
 
@@ -92,6 +101,8 @@ class TelemetryApp:
         ttk.Button(button_frame, text="🧹 Clear Screen", command=self.clear_screen).grid(row=0, column=5, padx=3, pady=2)
         # Inside create_widgets, within the button_frame section:
         ttk.Button(button_frame, text="🔴 Toggle Logging", command=self.toggle_logging).grid(row=0, column=6, padx=3, pady=2)
+        ttk.Button(button_frame, text="📈 PLOT DATA", 
+           command=lambda: PlotWindow(self.root, self)).grid(row=0, column=7, padx=3, pady=2)
         self.config_label = tk.Label(input_frame, text="Config: none", fg="#333")
         self.config_label.grid(row=2, column=0, columnspan=5, sticky="w", pady=(10,0))
 
@@ -524,6 +535,9 @@ class TelemetryApp:
                                 parsed_output = f"Raw Hex [Type 0x{info_type:02X}]: {payload.hex().upper()}"
 
                             self.root.after(0, self.log_message, f"[{timestamp}] Node '{dev_name}' -> {parsed_output}")
+                            # Add this:
+                            for callback in self.subscribers:
+                                callback(dev_name, parsed_output)
                         
                         del raw_data[:sync_idx + total_size]
 
