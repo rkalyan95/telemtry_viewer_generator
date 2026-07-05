@@ -50,7 +50,9 @@ class TelemetryApp:
         self.listen_thread = None
         self.config_data = None
         self.config_path = None
-
+        self.is_logging = False
+        self.clean_file = None
+        self.raw_file = None
         self.create_widgets()
         self.attempt_serial_connection()
 
@@ -88,7 +90,8 @@ class TelemetryApp:
         ttk.Button(button_frame, text="✏️ Edit Sensor", command=self.edit_sensor).grid(row=0, column=3, padx=3, pady=2)
         ttk.Button(button_frame, text="🗑 Remove Sensor", command=self.remove_sensor).grid(row=0, column=4, padx=3, pady=2)
         ttk.Button(button_frame, text="🧹 Clear Screen", command=self.clear_screen).grid(row=0, column=5, padx=3, pady=2)
-
+        # Inside create_widgets, within the button_frame section:
+        ttk.Button(button_frame, text="🔴 Toggle Logging", command=self.toggle_logging).grid(row=0, column=6, padx=3, pady=2)
         self.config_label = tk.Label(input_frame, text="Config: none", fg="#333")
         self.config_label.grid(row=2, column=0, columnspan=5, sticky="w", pady=(10,0))
 
@@ -155,7 +158,8 @@ class TelemetryApp:
     def log_message(self, message):
         self.log_text.insert(tk.END, message + "\n")
         self.log_text.see(tk.END)
-
+        self.write_to_log(self.clean_file, f"[{time.strftime('%H:%M:%S')}] {message}")
+        
     def log_raw_bytes(self, raw_bytes):
         # Formats incoming packets cleanly into both hex and string segments
         hex_dump = " ".join(f"{b:02X}" for b in raw_bytes)
@@ -164,7 +168,8 @@ class TelemetryApp:
         
         self.raw_text.insert(tk.END, f"[{timestamp}] HEX: {hex_dump}\n             ASCII: {ascii_dump}\n")
         self.raw_text.see(tk.END)
-
+        self.write_to_log(self.raw_file, f"[{timestamp}] HEX: {hex_dump}")
+        
     def generate_config_files(self):
         if self.config_data:
             config = self.config_data
@@ -526,6 +531,23 @@ class TelemetryApp:
                 self.serial_connected = False
                 break
 
+    def toggle_logging(self):
+        if not self.is_logging:
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            self.clean_file = open(f"clean_log_{timestamp}.txt", "w", encoding="utf-8")
+            self.raw_file = open(f"raw_log_{timestamp}.txt", "w", encoding="utf-8")
+            self.is_logging = True
+            self.update_status("Logging started...", "blue")
+        else:
+            self.is_logging = False
+            if self.clean_file: self.clean_file.close()
+            if self.raw_file: self.raw_file.close()
+            self.update_status("Logging stopped.", "green")
+
+    def write_to_log(self, file_handle, data):
+        if self.is_logging and file_handle:
+            file_handle.write(data + "\n")
+            file_handle.flush()
 if __name__ == "__main__":
     root = tk.Tk()
     app = TelemetryApp(root)
