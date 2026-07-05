@@ -9,9 +9,8 @@
 /* Generated telemetry IDs for sensors and commands. */
 enum
 {
-    TELEMTRY_ID_NAME = 0x01,
     /* Add only above this line */
-    TOTAL_TELEMTRY_ID,
+    TOTAL_TELEMTRY_ID = 1,
 };
 
 
