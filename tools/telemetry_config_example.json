@@ -2,78 +2,9 @@
   "sensors": [
     {
       "id": 1,
-      "name": "test",
+      "name": "name",
       "description": "",
       "data_type": "float32"
-    },
-    {
-      "id": 2,
-      "name": "test2",
-      "description": "",
-      "data_type": "int8"
-    },
-    {
-      "id": 3,
-      "name": "bmp",
-      "description": "",
-      "data_type": "struct",
-      "struct_fields": [
-        {
-          "name": "temp",
-          "data_type": "float32",
-          "count": 1
-        },
-        {
-          "name": "pressure",
-          "data_type": "float32",
-          "count": 1
-        },
-        {
-          "name": "humid",
-          "data_type": "float32",
-          "count": 1
-        },
-        {
-          "name": "name",
-          "data_type": "string",
-          "count": 7,
-          "default_value": "bmp280"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "temp",
-      "description": "",
-      "data_type": "struct",
-      "struct_fields": [
-        {
-          "name": "field1",
-          "data_type": "uint8",
-          "count": 1
-        },
-        {
-          "name": "field2",
-          "data_type": "float32",
-          "count": 1
-        },
-        {
-          "name": "filed3",
-          "data_type": "uint16",
-          "count": 1
-        },
-        {
-          "name": "field4",
-          "data_type": "string",
-          "count": 7,
-          "default_value": "temp12"
-        },
-        {
-          "name": "field5",
-          "data_type": "bytes",
-          "count": 4
-        }
-      ]
     }
   ]
 }

@@ -2,86 +2,29 @@
 #include "telemtrycustom.h"
 #include <stdint.h>
 
-static float test_data = 0;
+static float name_data = 0;
 
-static int8_t test2_data = 0;
-
-bmp_t bmp_data = { 0, 0, 0, "bmp280" };
-
-temp_t temp_data = { 0, 0, 0, "temp12", {0} };
-
-tel_information_t sensor_test = {
+tel_information_t sensor_name = {
     .data_synch = TELEMTRY_ID_SYNCH,
     .information_type = TELEMTRY_TYPE_FLOAT,
-    .information_id = TELEMTRY_ID_TEST,
-    .information_len = sizeof(test_data),
-    .information_buffer = &test_data
+    .information_id = TELEMTRY_ID_NAME,
+    .information_len = sizeof(name_data),
+    .information_buffer = &name_data
 };
 
-tel_information_t sensor_test2 = {
-    .data_synch = TELEMTRY_ID_SYNCH,
-    .information_type = TELEMTRY_TYPE_INT8,
-    .information_id = TELEMTRY_ID_TEST2,
-    .information_len = sizeof(test2_data),
-    .information_buffer = &test2_data
-};
-
-tel_information_t sensor_bmp = {
-    .data_synch = TELEMTRY_ID_SYNCH,
-    .information_type = TELEMTRY_TYPE_STRUCT,
-    .information_id = TELEMTRY_ID_BMP,
-    .information_len = sizeof(bmp_data),
-    .information_buffer = &bmp_data
-};
-
-tel_information_t sensor_temp = {
-    .data_synch = TELEMTRY_ID_SYNCH,
-    .information_type = TELEMTRY_TYPE_STRUCT,
-    .information_id = TELEMTRY_ID_TEMP,
-    .information_len = sizeof(temp_data),
-    .information_buffer = &temp_data
-};
-
-tel_cmd_t cmd_test = {
+tel_cmd_t cmd_name = {
     .cmd_synch = TELEMTRY_ID_CMD,
-    .cmd_id = TELEMTRY_ID_TEST,
-    .tx_buffer = (uint8_t *)"test",
-    .crc = 0xFFFF
-};
-
-tel_cmd_t cmd_test2 = {
-    .cmd_synch = TELEMTRY_ID_CMD,
-    .cmd_id = TELEMTRY_ID_TEST2,
-    .tx_buffer = (uint8_t *)"test2",
-    .crc = 0xFFFF
-};
-
-tel_cmd_t cmd_bmp = {
-    .cmd_synch = TELEMTRY_ID_CMD,
-    .cmd_id = TELEMTRY_ID_BMP,
-    .tx_buffer = (uint8_t *)"bmp:@fff7S",
-    .crc = 0xFFFF
-};
-
-tel_cmd_t cmd_temp = {
-    .cmd_synch = TELEMTRY_ID_CMD,
-    .cmd_id = TELEMTRY_ID_TEMP,
-    .tx_buffer = (uint8_t *)"temp:@BfH7S4s",
+    .cmd_id = TELEMTRY_ID_NAME,
+    .tx_buffer = (uint8_t *)"name",
     .crc = 0xFFFF
 };
 
 tel_cmd_t *sensor_array[TOTAL_TELEMTRY_ID-1] = {
 
-    &cmd_test,
-    &cmd_test2,
-    &cmd_bmp,
-    &cmd_temp,
+    &cmd_name,
 };
 
 tel_information_t *buffers_array[TOTAL_TELEMTRY_ID-1] = {
 
-    &sensor_test,
-    &sensor_test2,
-    &sensor_bmp,
-    &sensor_temp,
+    &sensor_name,
 };

@@ -234,11 +234,16 @@ def render_info_header(config, header_name="info_config.h"):
         used_names.add(identifier)
         ids.append((identifier, item["id"]))
     ids.sort(key=lambda x: x[1])
-
-    enum_lines = [f"    TELEMTRY_ID_{name} = 0x{value:02X}," for name, value in ids]
-    enum_lines.append("    /* Add only above this line */")
-    enum_lines.append("    TOTAL_TELEMTRY_ID,")
-
+    enum_lines = []
+    if ids:
+        # Generate ID lines if sensors exist
+        enum_lines = [f"    TELEMTRY_ID_{name} = 0x{value:02X}," for name, value in ids]
+        enum_lines.append("    /* Add only above this line */")
+        enum_lines.append("    TOTAL_TELEMTRY_ID,")
+    else:
+        # Empty case
+        enum_lines.append("    /* Add only above this line */")
+        enum_lines.append("    TOTAL_TELEMTRY_ID = 1,")
     struct_defs = []
     for section in ("sensors", "commands"):
         for item in config.get(section, []):
