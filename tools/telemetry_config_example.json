@@ -1,3 +1,33 @@
 {
-  "sensors": []
+  "sensors": [
+    {
+      "id": 1,
+      "name": "usonic",
+      "description": "",
+      "data_type": "struct",
+      "struct_fields": [
+        {
+          "name": "sonic_timestamp",
+          "data_type": "uint32",
+          "count": 1
+        },
+        {
+          "name": "sonic_duration",
+          "data_type": "uint32",
+          "count": 1
+        },
+        {
+          "name": "distance_mm",
+          "data_type": "uint16",
+          "count": 1
+        },
+        {
+          "name": "sonic_name",
+          "data_type": "string",
+          "count": 6,
+          "default_value": "hr-04"
+        }
+      ]
+    }
+  ]
 }
